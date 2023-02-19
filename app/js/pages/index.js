@@ -1,7 +1,3 @@
-// SCSS
-// import '../../scss/index';
-
-// JS
 import {sayHi, sayBye} from '../base/popup';
 import {global} from '../modules/global';
 import {test} from '../modules/test';
@@ -13,3 +9,7 @@ nodeVideoWrapper.addEventListener('click', function(e) {
   console.log(nodeVideo.pause, nodeVideo.play);
   nodeVideo.paused ? nodeVideo.play() : nodeVideo.pause();
 });
+
+console.log('>> Homepage');
+sayHi('Homepage');
+sayBye(global); 

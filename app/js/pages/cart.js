@@ -1,7 +1,3 @@
-// SCSS
-// import '../../scss/cart';
-
-// JS
 import {sayHi, sayBye} from '../base/popup';
 import {global} from '../modules/global';
 

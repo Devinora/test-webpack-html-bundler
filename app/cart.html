@@ -15,12 +15,14 @@
 </head>
 
 <body class="page">
+  <a href="index.html">>> Homepage</a>
   <div class="page__wrapper">
-    <!-- <include src="./templates/base/header.html"/> -->
+    <!-- Use ESJ syntax to include a partial: -->
+    <%- include('/base/header.html'); %>
     <main class="main page__main">
       <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere, laboriosam!</p>
     </main>
-    <!-- <include src="./templates/base/footer.html"/> -->
+    <%- include('/base/footer.html'); %>
   </div>
 </body>
 </html>
