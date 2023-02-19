@@ -1,0 +1,22 @@
+@use '../utilities/variables' as *;
+@use '../utilities/mixins';
+
+.page {
+  @include mixins.font();
+  font-weight: $fwLight;
+  color: var(--primaryColor);
+  // color: $primaryColor;
+  min-height: 100vh;
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  &__main {
+    flex-grow: 1;
+    background: rgb(212, 226, 9);
+  }
+  &__inner {
+    padding: 0 16px;
+  }
+}

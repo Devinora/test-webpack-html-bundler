@@ -1,0 +1,196 @@
+@use '../utilities/variables' as *;
+@use '../modules/function';
+@use 'sass:map';
+@use 'sass:string';
+
+// Font Path
+$path: '../fonts/';
+
+// Font Style
+$styleItalic: italic;
+$styleNormal: normal;
+
+// Font Style Names
+$styleNameItalic: 'Italic';
+$styleNameNormal: 'Normal';
+
+// Font Weight
+$weightThin: 100;
+$weightExtraLight: 200;
+$weightLight: 300;
+$weightRegular: 400;
+$weightMedium: 500;
+$weightSemiBold: 600;
+$weightBold: 700;
+$weightExtraBold: 800;
+$weightBlack: 900;
+
+$weightList: (
+  'Thin': 100,
+  'ExtraLight': 200,
+  'Light': 300,
+  'Regular': 400,
+  'Medium': 500,
+  'SemiBold': 600,
+  'Bold': 700,
+  'ExtraBold': 800,
+  'Black': 900,
+);
+
+// Font Weight Names
+$weightNameThin: 'Thin';
+$weightNameExtraLight: 'ExtraLight';
+$weightNameLight: 'Light';
+$weightNameRegular: 'Regular';
+$weightNameMedium: 'Medium';
+$weightNameSemiBold: 'SemiBold';
+$weightNameBold: 'Bold';
+$weightNameExtraBold: 'ExtraBold';
+$weightNameBlack: 'Black';
+
+@mixin fontFace($font) {
+  $fontName: map.get($font, 'name');
+  // Test Test: Test-Test
+  $fontNameStandard: function.strReplace($fontName, ' ', '-');
+  $fontList: map.get($font, 'list');
+
+  @each $item in $fontList {
+    // Имя начертания в нижнем регистре.
+    $nameToLowercase: string.to-lower-case($item);
+    $fontWeightStyleName: function.strReplace($item, '-', ' ');
+    // Индекс строки для условия.
+    $isItemIndex: string.index($nameToLowercase, $styleItalic);
+    // Путь
+    $srcFile: '#{$path}#{$fontNameStandard}/#{$fontNameStandard}-#{$item}/#{$fontNameStandard}-#{$item}';
+    // Индекс подстроки.
+    $substringIndex: string.index($item, '-');
+    // Создание переменное для дальнейшего переопределения.
+    // Числовое имя начертания.
+    $weight: null;
+
+    @if $substringIndex == null {
+      $weight: map.get($weightList, $item);
+    } @else {
+      $substringIndex: $substringIndex - 1;
+      $weightName: string.slice($item, 1, $substringIndex);
+      $weight: map.get($weightList, $weightName);
+    }
+
+    @font-face {
+      font-family: $fontName;
+      src: url('#{$srcFile}.eot');
+      src: local('#{$fontName} #{$fontWeightStyleName}'), local('#{$fontNameStandard}-#{$item}'),
+        url('#{$srcFile}.eot?#iefix') format('embedded-opentype'),
+        url('#{$srcFile}.woff') format('woff'),
+        url('#{$srcFile}.ttf') format('truetype'),
+        url('#{$srcFile}.svg##{$fontName}') format('svg');
+      @if $isItemIndex {
+        font-weight: $weight;
+        font-style: $styleItalic;
+      } @else {
+        font-weight: $weight;
+        font-style: $styleNormal;
+      }
+    }
+  }
+}
+
+@mixin fontIcon($font-family, $file-path, $weight: normal, $style: normal, $asset-pipeline: false ) {
+	@font-face {
+		font-family: $font-family;
+		font-weight: $weight;
+		font-style: $style;
+
+		@if $asset-pipeline == true {
+			src: font-url('#{$file-path}.eot?v=1');
+			src: font-url('#{$file-path}.eot?v=1#iefix') format('embedded-opentype'),
+			font-url('#{$file-path}.woff2?v=1') format('woff2'),
+			font-url('#{$file-path}.woff?v=1') format('woff'),
+			font-url('#{$file-path}.ttf?v=1') format('truetype'),
+			font-url('#{$file-path}.svg?v=1##{$font-family}') format('svg');
+		} @else {
+				src: url('#{$file-path}.eot?v=1');
+				src: url('#{$file-path}.eot?v=1#iefix') format('embedded-opentype'),
+				url('#{$file-path}.woff2?v=1') format('woff2'),
+				url('#{$file-path}.woff?v=1') format('woff'),
+				url('#{$file-path}.ttf?v=1') format('truetype'),
+				url('#{$file-path}.svg?v=1##{$font-family}') format('svg');
+		}
+	}
+}
+
+// Fonts Init
+
+@include fontFace(
+  (
+    'name': $ffMontserrat,
+       // Соблюдать такой же реги
+    'list':
+      (
+        'Bold',
+      ),
+  )
+);
+
+@include fontFace(
+  (
+    'name': $ffNunito,
+       // Соблюдать такой же реги
+    'list':
+      (
+        'Light-Italic',
+        'Regular',
+        'SemiBold',
+        'Bold',
+      ),
+  )
+);
+
+// Icon Fonts
+
+@include fontIcon('Icon', '../fonts/Icon/Icon');
+
+// Пример
+// $icomoon: (
+//   example: 'e900',
+// );
+
+$Icon: (
+  cart: 'e900',
+  coffee-beans: 'e903',
+  mountain: 'e904',
+  arrow-left: 'e905',
+  arrow-right: 'e906',
+);
+
+[class^="icon-"], [class*="icon-"] {
+	/* use !important to prevent issues with browser extensions that change fonts */
+	font-family: 'Icon' !important;
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+//методы sass
+//метод uquote удаляет (").
+//метод str-insert добавляет второй аргумент в первый за счет третего, который указывает позицию.
+
+// @each $name, $str in $icomoon {
+//   .icon-#{$name}:before {
+//     content: unquote('"') + unquote(str-insert ($str, '\\', 1)) + unquote('"');
+//   }
+// }
+
+@each $name, $str in $Icon {
+  [class^='icon-#{$name}']:before,
+  [class*='icon-#{$name}']:before {
+    content: unquote('"') + unquote(str-insert($str, '\\', 1)) + unquote('"');
+  }
+}

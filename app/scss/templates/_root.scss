@@ -1,0 +1,19 @@
+@use '../utilities/variables' as *;
+
+// Colors
+
+$primaryColor: #415167;
+$accentColor: #c7a17a;
+$accentColorSecond: #f9f5e8;
+$darkGray: #151d28;
+$lightGray: #edf0f5;
+$black: #000;
+
+:root {
+  --primaryColor: #{$primaryColor};
+  --accentColor: #{$accentColor};
+  --accentColorSecond: #{$accentColorSecond};
+  --darkGray: #{$darkGray};
+  --lightGray: #{$lightGray};
+  --black: #{$black};
+}

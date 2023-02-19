@@ -1,0 +1,4 @@
+# Ingore folder name `node_modules`
+# Ingore folder name `idea`
+node_modules/
+dist/

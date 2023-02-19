@@ -1,0 +1,36 @@
+@use '../utilities/variables' as *;
+
+@mixin bp($point, $type: min) {
+  @media screen and (#{$type}-width: #{$point}px) {
+    @content;
+  }
+}
+
+@mixin centeringXY {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+@mixin centeringX {
+  position: absolute;
+	left: 50%;
+	transform: translate(-50%, 0);
+}
+
+@mixin centeringY {
+  position: absolute;
+	top: 50%;
+	transform: translate(0, -50%);
+}
+
+@mixin font($fz: $fz, $lh: $lh, $ff: $ff) {
+  font: #{$fz}/#{$lh} $ff;
+}
+
+@mixin iconFont($ico, $fz) {
+  content: unquote("\"")+unquote(str-insert($ico, "\\", 1))+unquote("\"");
+	display: block;
+	font: #{$fz}/#{1} $iconFamily;
+}
