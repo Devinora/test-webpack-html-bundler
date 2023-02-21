@@ -1,28 +1,34 @@
 <!-- Made with l̶o̶v̶e a keyboard. -->
 <!DOCTYPE html>
 <html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <!-- <title>Webpack: Home</title> -->
+    <title><%= title %></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no"
+    />
+    <link rel="icon" href="@images/favicon.ico" type="image/x-icon" />
+    <link href="@styles/cart.scss" rel="stylesheet" />
+    <script src="@scripts/pages/cart.js" defer="defer"></script>
+    <!-- yes of cause, you can use relative path too -->
+    <script src="@scripts/main.js" defer="defer"></script>
+  </head>
 
-<head>
-  <meta charset="utf-8" />
-  <!-- <title>Webpack: Home</title> -->
-  <title><%= title %></title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no" />
-  <link rel="icon" href="./img/favicon.ico" type="image/x-icon">
-  <link href="./scss/cart.scss" rel="stylesheet">
-  <script src="./js/pages/cart.js" defer="defer"></script>
-</head>
-
-<body class="page">
-  <a href="index.html">>> Homepage</a>
-  <div class="page__wrapper">
-    <!-- Use ESJ syntax to include a partial: -->
-    <%- include('/base/header.html'); %>
-    <main class="main page__main">
-      <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere, laboriosam!</p>
-    </main>
-    <%- include('/base/footer.html'); %>
-  </div>
-</body>
+  <body class="page">
+    <a href="index.html">>> Homepage</a>
+    <div class="page__wrapper">
+      <!-- Use ESJ syntax to include a partial: -->
+      <%- include('/base/header.html'); %>
+      <main class="main page__main">
+        <p>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere,
+          laboriosam!
+        </p>
+      </main>
+      <%- include('/base/footer.html'); %>
+    </div>
+  </body>
 </html>

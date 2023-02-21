@@ -19,53 +19,12 @@ const ejsOptions = {
   root: path.join(projectPath.context, 'templates'),
 }
 
-// Метод для поиска файлов.
-const fileFilter = require('./modules/fileFilter');
-
-// ОбЪект с рабочими файлами
-// TODO: delete it
-// js: {
-//   expansion: '.js',
-//   names: ['cart', 'index', 'profile'],
-// };
-const fileList = fileFilter([
-  {
-    source: path.join(projectPath.context, projectPath.entry),
-    fileExtension: '.js',
-  },
-  {
-    source: projectPath.context,
-    fileExtension: '.html',
-  },
-]);
-
 // get module name for split chunks
 const getModuleName = (module, chunks, groupName) => {
   const moduleName = module.resourceResolveData.descriptionFileData.name.replace('@', '');
   const allChunksNames = chunks.map((item) => item.name).join('~');
   //return `${groupName}.${moduleName}`; // <= this should be enough
   return `${groupName}~${allChunksNames}~${moduleName}`;
-};
-
-// your function is not working and buggy on macOS, see my getModuleName()
-// Error on macOS: Prevent writing to file that only differs in casing 
-// or query string from already written file.
-const setChunksName = function (module, chunks, cacheGroupKey) {
-  let moduleName = module.identifier();
-
-  function getStr(str, start, end) {
-    const strStart = str.lastIndexOf(start) + 1;
-    const strEnd = str.lastIndexOf(end);
-    return str.slice(strStart, strEnd);
-  }
-
-  moduleName = getStr(moduleName, '\\', '.');
-
-  const allChunksNames = chunks.map((item) => item.name).join('~');
-  if (allChunksNames === moduleName) {
-    return `${cacheGroupKey}~${allChunksNames}`;
-  }
-  return `${cacheGroupKey}~${allChunksNames}~${moduleName}`;
 };
 
 // Временная переменная, которая определяет режим сборки.
@@ -84,38 +43,8 @@ module.exports = {
     // Учитывая, что создается актив размером более 250 КБ:
     hints: false,
   },
-  // stats: 'verbose',
-
-  // TODO: delete Webpack entry
-  // don't define in entry js/scss files when used the HtmlBundlerPlugin
-  // using the HtmlBundlerPlugin an entry point is an HTML template
-  // entry: () => {
-  //   // Объект в котором будут сгенерированы точки входа.
-  //   const entryPoints = {};
-  //   // Цикл для автоматической генерации точек входа.
-  //   fileList.js.names.forEach((element) => {
-  //     // Расширение файла
-  //     const { expansion } = fileList.js;
-  //     // Присваивание имени файла
-  //     entryPoints[element] = `${projectPath.entry}${element}${expansion}`;
-  //   });
-  //   return entryPoints;
-  // },
   output: {
     path: projectPath.output,
-    // TODO: delete filename here, if you need, define the js filename under Plugin option js.filename
-    // filename: (pathData) => {
-    //   if (NODE_ENV === 'production') {
-    //     return `${projectPath.outputJs}[name]~[chunkhash:8].js`;
-    //   }
-    //   return `${projectPath.outputJs}[name].js`;
-    // },
-    
-    // TODO: using new plugin is not needed more, delete it
-    // chunkFilename: '[name][file][query][fragment]base][path]',
-    
-    // TODO: define asset filename in each module.rule.generator.filename, but not here
-    // assetModuleFilename: '[id][name][file][query][fragment]base][path]',
   },
   optimization: {
     // minimize: NODE_ENV === 'production',
@@ -143,7 +72,6 @@ module.exports = {
           //name: setChunksName,
           name: getModuleName,
         },
-
         // don't split styles, it is impossible,
         // because css-loader returns all stylies as non splitable JS code
         // you can manualy define several SCSS files to split styles
@@ -214,29 +142,6 @@ module.exports = {
         generator: {
           filename: 'img/[name]~[contenthash:8][ext]',
         },
-        // The 'image-webpack-loader' require the installed 'imagemin-mozjpe',
-        // but the mozjpeg not working on macbook M1 :-/
-        // loader: 'image-webpack-loader',
-        // options: {
-        //   mozjpeg: {
-        //     progressive: true,
-        //   },
-        //   // optipng.enabled: false will disable optipng
-        //   optipng: {
-        //     enabled: false,
-        //   },
-        //   pngquant: {
-        //     quality: [0.65, 0.9],
-        //     speed: 4,
-        //   },
-        //   gifsicle: {
-        //     interlaced: false,
-        //   },
-        //   // the webp option will enable WEBP
-        //   webp: {
-        //     quality: 75,
-        //   },
-        // },
       },
       // Image END
       // Fonts START
