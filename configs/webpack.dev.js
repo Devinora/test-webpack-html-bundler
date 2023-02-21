@@ -29,6 +29,13 @@ const config = {
       },
       progress: true,
     },
+    // enable watch changes in files
+    watchFiles: {
+      paths: ['app/**/*.*'],
+      options: {
+        usePolling: true,
+      },
+    },
   },
 };
 

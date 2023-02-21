@@ -9,18 +9,25 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no" />
-  <link rel="icon" href="./img/favicon.ico" type="image/x-icon">
-  <link href="./scss/index.scss" rel="stylesheet">
-  <script src="./js/pages/index.js" defer="defer"></script>
+  <link rel="icon" href="@images/favicon.ico" type="image/x-icon">
+
+  <!-- you can use Webpack aliases instead of relative path -->
+  <link href="@styles/index.scss" rel="stylesheet">
+  <script src="@scripts/pages/index.js" defer="defer"></script>
+   <!-- yes of cause, you can use relative path too -->
+   <script src="./js/main.js" defer="defer"></script>
 </head>
 
 <body class="page">
+  <a href="cart.html">>> Cart</a>
   <div class="page__wrapper">
-    <!-- <include src="./templates/base/header.html"/> -->
+    <!-- use ESJ syntax to include a partial -->
+    <!-- a partial will be loaded in the root template path defined in options -->
+    <%- include('/base/header.html'); %>
     <main class="main page__main">
       <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere, laboriosam!</p>
     </main>
-    <!-- <include src="./templates/base/footer.html"/> -->
+    <%- include('/base/footer.html'); %>
   </div>
 </body>
 </html>
