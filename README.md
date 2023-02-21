@@ -1,5 +1,3 @@
-# Webpack 5 Template
-
 <div align="center">
     <h1>
         <img height="200" src="https://raw.githubusercontent.com/webdiscus/html-bundler-webpack-plugin/master/images/plugin-logo.png">
