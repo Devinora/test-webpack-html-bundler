@@ -17,11 +17,12 @@ const ejsOptions = {
   // define root template path
   // file is searched in /templates, e.g. <%- include('/base/header.html'); %>
   root: path.join(projectPath.context, 'templates'),
-}
+};
 
 // get module name for split chunks
 const getModuleName = (module, chunks, groupName) => {
-  const moduleName = module.resourceResolveData.descriptionFileData.name.replace('@', '');
+  const moduleName =
+    module.resourceResolveData.descriptionFileData.name.replace('@', '');
   const allChunksNames = chunks.map((item) => item.name).join('~');
   //return `${groupName}.${moduleName}`; // <= this should be enough
   return `${groupName}~${allChunksNames}~${moduleName}`;
@@ -95,7 +96,8 @@ module.exports = {
         test: /\.(html|ejs)$/,
         loader: HtmlBundlerPlugin.loader,
         options: {
-          preprocessor: (template, { data }) => ejs.render(template, data, ejsOptions),
+          preprocessor: (template, { data }) =>
+            ejs.render(template, data, ejsOptions),
         },
       },
       // Babel START
@@ -179,8 +181,8 @@ module.exports = {
     // import File from '../path/to/file';
     // Базовые настройки
     // extensions: ['.wasm', '.mjs', '.js', '.json'],
-    
-    // TODO: never use auto resolving of css, scss, html extensions, 
+
+    // TODO: never use auto resolving of css, scss, html extensions,
     // please add its to a filename always
     //extensions: ['.js', '.json', '.jsx', '.css', '.sass', '.scss', '.html'],
     extensions: ['.js', '.json', '.jsx'],
@@ -189,13 +191,15 @@ module.exports = {
     new HtmlBundlerPlugin({
       entry: {
         // define templates here
-        index: { // => dist/index.html (key is output filename w/o '.html')
+        index: {
+          // => dist/index.html (key is output filename w/o '.html')
           import: 'index.html', // template file
-          data: { title: 'Homepage' } // pass variables into template
+          data: { title: 'Homepage' }, // pass variables into template
         },
-        cart: { // => dist/cart.html
+        cart: {
+          // => dist/cart.html
           import: 'cart.html',
-          data: { title: 'Cart', }
+          data: { title: 'Cart' },
         },
         // if your templates has't external variables, you can use the simple syntax
         // and the entry object can be dynamicly generated
@@ -209,6 +213,9 @@ module.exports = {
       css: {
         // output filename of extracted CSS
         filename: 'css/[name].[contenthash:8].css',
+      },
+      watchFiles: {
+        paths: [projectPath.context],
       },
     }),
   ],
