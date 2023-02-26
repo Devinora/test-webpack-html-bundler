@@ -24,7 +24,7 @@ const getModuleName = (module, chunks, groupName) => {
   const moduleName =
     module.resourceResolveData.descriptionFileData.name.replace('@', '');
   const allChunksNames = chunks.map((item) => item.name).join('~');
-  //return `${groupName}.${moduleName}`; // <= this should be enough
+  // return `${groupName}.${moduleName}`; // <= this should be enough
   return `${groupName}~${allChunksNames}~${moduleName}`;
 };
 
@@ -49,7 +49,7 @@ module.exports = {
   },
   optimization: {
     // minimize: NODE_ENV === 'production',
-    //minimize: false,
+    // minimize: false,
     runtimeChunk: {
       name: 'runtime',
     },
@@ -63,14 +63,14 @@ module.exports = {
           minSize: 0,
           // Минимальное количество фрагментов, которые должны совместно использовать модуль перед разделением.
           minChunks: 2,
-          //name: setChunksName,
+          // name: setChunksName,
           name: getModuleName,
         },
         vendors: {
           test: /[\\/]node_modules[\\/]/,
           chunks: 'all',
           // minSize: 0,
-          //name: setChunksName,
+          // name: setChunksName,
           name: getModuleName,
         },
         // don't split styles, it is impossible,
@@ -184,7 +184,7 @@ module.exports = {
 
     // TODO: never use auto resolving of css, scss, html extensions,
     // please add its to a filename always
-    //extensions: ['.js', '.json', '.jsx', '.css', '.sass', '.scss', '.html'],
+    // extensions: ['.js', '.json', '.jsx', '.css', '.sass', '.scss', '.html'],
     extensions: ['.js', '.json', '.jsx'],
   },
   plugins: [
@@ -214,6 +214,7 @@ module.exports = {
         // output filename of extracted CSS
         filename: 'css/[name].[contenthash:8].css',
       },
+      verbose: true,
       watchFiles: {
         paths: [projectPath.context],
       },
